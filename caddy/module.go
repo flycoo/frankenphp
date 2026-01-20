@@ -176,6 +176,7 @@ func needReplacement(s string) bool {
 
 // ServeHTTP implements caddyhttp.MiddlewareHandler.
 func (f *FrankenPHPModule) ServeHTTP(w http.ResponseWriter, r *http.Request, _ caddyhttp.Handler) error {
+	fmt.Println("qiu: [Go] ServeHTTP received request")
 	ctx := r.Context()
 	origReq := ctx.Value(caddyhttp.OriginalRequestCtxKey).(http.Request)
 	repl := ctx.Value(caddy.ReplacerCtxKey).(*caddy.Replacer)

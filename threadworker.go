@@ -256,8 +256,13 @@ func (handler *workerThread) waitForWorkerRequest() (bool, any) {
 //
 //export go_frankenphp_worker_handle_request_start
 func go_frankenphp_worker_handle_request_start(threadIndex C.uintptr_t) (C.bool, unsafe.Pointer) {
+	fmt.Println("qiu: [C->Go] go_frankenphp_worker_handle_request_start called (asking for request)")
 	handler := phpThreads[threadIndex].handler.(*workerThread)
 	hasRequest, parameters := handler.waitForWorkerRequest()
+
+	if hasRequest {
+		fmt.Println("qiu: [Go] Worker received request, unblocking C")
+	}
 
 	if parameters != nil {
 		var ptr unsafe.Pointer

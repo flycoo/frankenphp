@@ -410,6 +410,7 @@ PHP_FUNCTION(frankenphp_response_headers) /* {{{ */
 /* }}} */
 
 PHP_FUNCTION(frankenphp_handle_request) {
+  printf("qiu: [C] frankenphp_handle_request called (entering wait state)\n");
   zend_fcall_info fci;
   zend_fcall_info_cache fcc;
 
@@ -432,6 +433,9 @@ PHP_FUNCTION(frankenphp_handle_request) {
 
   struct go_frankenphp_worker_handle_request_start_return result =
       go_frankenphp_worker_handle_request_start(thread_index);
+  
+  printf("qiu: [C] go_frankenphp_worker_handle_request_start returned (request received, executing PHP callback)\n");
+
   if (frankenphp_worker_request_startup() == FAILURE
       /* Shutting down */
       || !result.r0) {
